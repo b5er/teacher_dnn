@@ -41,7 +41,7 @@ good_bad_outputs = array([[1, 1, 0, 0, 0, 1, 1, 0, 0]]).T
 
 # 421 - Intro to AI
 # Donald Perlis
-should_teacher = array([.5, .05, 4])
+should_teacher = array([.9, .02, 4])
 
 def plotting():
 	fig = plt.figure()
@@ -51,7 +51,7 @@ def plotting():
 		if good_bad_outputs[i] == 0:
 			color = 'b'
 		a.scatter([teacher_set_inputs[i][0]], [teacher_set_inputs[i][1]], [teacher_set_inputs[i][2]], c=color)
-	a.scatter([should_teacher[0]], [should_teacher[1]], [should_teacher[1]], c='black')
+	a.scatter([should_teacher[0]], [should_teacher[1]], [should_teacher[2]], c='black')
 	plt.show()
 
 plotting()
@@ -61,15 +61,12 @@ plotting()
 
 # ------------ Define Activation Function ----------------
 
-# The Sigmoid function, which describes an S shaped curve.
-# We pass the weighted sum of the inputs through this function to
-# normalise them between 0 and 1.
+# The Sigmoid function.
 def sigmoid(x):
     return 1 / (1 + exp(-x))
 
-# The derivative of the Sigmoid function.
-# This is the gradient of the Sigmoid curve.
-# It indicates how confident we are about the existing weight.
+# The derivative/gradient of the Sigmoid function.
+# tells how confident we are about the existing weight.
 def deriv_sigmoid(x):
     return x * (1 - x)
 
@@ -137,8 +134,8 @@ output_layer_output = sigmoid(dot(hidden_layer_output, output_layer_w))
 
 
 
-# fig = plt.plot(cost)
-# plt.show()
+fig = plt.plot(cost)
+plt.show()
 
 def rate_professor(pred):
 	if pred < .5:
