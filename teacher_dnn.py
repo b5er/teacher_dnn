@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt 
 from mpl_toolkits.mplot3d import Axes3D
-from numpy import exp, array, random, dot, square
+from numpy import exp, array, random, dot, square, linspace
 import os
 
 
@@ -21,7 +21,7 @@ import os
 9. Alan Herman
 '''
 
-# our umd Ratings, Failing Metric, Difficulty Level
+# ourUMD Reviews Ratings, Failing Metric, Difficulty Level
 
 teacher_set_inputs = array([
        [.6, .1, 2],
@@ -41,7 +41,7 @@ good_bad_outputs = array([[1, 1, 0, 0, 0, 1, 1, 0, 0]]).T
 
 # 421 - Intro to AI
 # Donald Perlis
-should_teacher = array([.9, .02, 4])
+should_teacher = array([.6, .14, 4])
 
 def plotting():
 	fig = plt.figure()
@@ -68,7 +68,14 @@ def sigmoid(x):
 # The derivative/gradient of the Sigmoid function.
 # tells how confident we are about the existing weight.
 def deriv_sigmoid(x):
-    return x * (1 - x)
+	return sigmoid(x) * (1 - sigmoid(x))
+
+
+# ----- Graph sigmoid & Derivative ---------
+x = linspace(-5,5,100)
+plt.plot(x, sigmoid(x), c='b')
+fig = plt.plot(x, deriv_sigmoid(x), c='r')
+plt.show()
 
 
 # Seed random number generator
@@ -90,7 +97,7 @@ print(output_layer_w)
 
 # ---------------------- Train ---------------------------
 
-iterations = 60000
+iterations = 20000
 cost = []
 
 for iteration in range(iterations):
@@ -108,7 +115,7 @@ for iteration in range(iterations):
 	 # ---------- Output Layer -------------
 	 # compute error of output layer. y_hat - y
 	 output_layer_error = good_bad_outputs - output_layer_output
-	 cost.append(output_layer_error[0])
+	 cost.append(output_layer_error[1])
 	 output_layer_delta = output_layer_error * deriv_sigmoid(output_layer_output)
 
 	 # ---------- Hidden Layer -------------
